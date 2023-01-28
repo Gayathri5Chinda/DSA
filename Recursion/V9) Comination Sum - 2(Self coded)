@@ -1,0 +1,25 @@
+//my solution for combination sum -2 with TLE using the approach of combination sum - 1
+class Solution {
+    public static void func(int ind, int candidates[], int target, HashSet<List<Integer>> ans, List<Integer> ds){
+        if(ind == candidates.length){
+            if(target == 0){
+                ans.add(new ArrayList<>(ds));
+            }
+            return;
+        }
+        if(candidates[ind] <= target){
+            ds.add(candidates[ind]);
+            func(ind+1, candidates, target-candidates[ind], ans, ds);
+            ds.remove(ds.size()-1);
+        }
+        func(ind+1, candidates, target, ans, ds);
+    }
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        HashSet<List<Integer>> ans = new HashSet<>();
+        func(0, candidates, target, ans, new ArrayList<>());
+        ArrayList<List<Integer>> list =new ArrayList<>();
+        list.addAll(ans); 
+        return list;
+    }
+}
